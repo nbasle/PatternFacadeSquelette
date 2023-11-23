@@ -1,0 +1,9 @@
+-- Cleanup
+DROP TABLE IF EXISTS T_COUNTER;
+DROP TABLE IF EXISTS T_ORDER_LINE;
+DROP TABLE IF EXISTS T_ORDER;
+
+-- Create
+CREATE TABLE T_COUNTER( name VARCHAR(10), PRIMARY KEY(name), value INTEGER NOT NULL);
+CREATE TABLE T_ORDER( id VARCHAR(10), PRIMARY KEY(id), orderdate TIMESTAMP NOT NULL, firstname VARCHAR(50) NOT NULL, lastname VARCHAR(50) NOT NULL, street1 VARCHAR(50) NOT NULL, street2 varchar(50), city VARCHAR(25) NOT NULL, state VARCHAR(25), zipcode VARCHAR(10) NOT NULL, country VARCHAR(25) NOT NULL, creditcardnumber VARCHAR(25), creditcardtype VARCHAR(25), creditcardexpirydate VARCHAR(10), customer_fk VARCHAR(10) NOT NULL, INDEX customer_fk_ind (customer_fk), FOREIGN KEY (customer_fk) REFERENCES t_customer(id)) TYPE=INNODB;
+CREATE TABLE T_ORDER_LINE( id VARCHAR(10), PRIMARY KEY(id), quantity INTEGER NOT NULL, unitCost DOUBLE NOT NULL, order_fk VARCHAR(10) NOT NULL, INDEX order_fk_ind (order_fk), FOREIGN KEY (order_fk) REFERENCES t_order(id) ON DELETE CASCADE, item_fk VARCHAR(10) NOT NULL, INDEX item_fk_ind (item_fk), FOREIGN KEY (item_fk) REFERENCES t_item(id) ON DELETE NO ACTION) TYPE=INNODB;
